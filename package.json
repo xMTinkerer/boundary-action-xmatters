@@ -1,0 +1,21 @@
+{
+  "name": "boundary-action-xmatters",
+  "version": "0.0.1",
+  "description": "xMatters action for Boundary alerts",
+  "dependencies": {
+    "async": "0.9.0",
+    "request": "2.47.x",
+    "underscore": "1.5.1"
+  },
+  "devDependencies": {
+    "chai": "^1.10.0",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-mocha-test": "^0.12.7",
+    "mocha": "^2.1.0",
+    "nock": "^0.59.1"
+  },
+  "engines": {
+    "node": "0.10.33"
+  }
+}
