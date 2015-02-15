@@ -138,7 +138,7 @@ Test harness output with debug messages:
           ✓ should return an error if there is no REST User. (51ms)
           ✓ should increment the error stats count when the status code returned from calling xMatters is not a success code. (62ms)
     
-    url ==>https://clientservices.hosted.xmatters.com/reapi/2015-01-01/forms/062fb616-93f0-414d-b400-a8c5b28e88a7/triggers<==
+    url ==>https://company.dc.xmatters.com/reapi/2015-01-01/forms/062fb616-93f0-414d-b400-a8c5b28e88a7/triggers<==
     reqBody ==>{
       "properties": {
         "entity_id": "ALARM/40506/www-server-1/CPU usage is high",

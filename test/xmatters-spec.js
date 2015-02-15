@@ -4,12 +4,12 @@ var _nock = require('nock');
 var _xmatters = require('../app/xmatters');
 
 // Set this to true to see debug messages in the console output
-var consoleOutput = true;
+var consoleOutput = false;
 
-var REST_USER = 'smcnall';
-var REST_PWD = 'xmsmcnall';
-var XM_BASE_URL  = 'https://clientservices.hosted.xmatters.com';
-var XM_FORM_PATH = '/reapi/2015-01-01/forms/062fb616-93f0-414d-b400-a8c5b28e88a7/triggers';
+var REST_USER = 'restuser';
+var REST_PWD = 'restuserpassword';
+var XM_BASE_URL  = 'https://company.dc.xmatters.com';
+var XM_FORM_PATH = '/reapi/2015-01-01/forms/UUID/triggers';
 var XMREBFORM_URL = XM_BASE_URL + XM_FORM_PATH;
 
 var mockAction1 = {
