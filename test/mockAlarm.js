@@ -167,6 +167,183 @@ var mockAlarm = {
 	}
 };
 
+var mockAlarm2 = {
+	// fields from the alarm
+	"id": 56789,
+	"name": "CPU usage is high",
+
+	// metadata added for actions
+	"_meta": {
+		// was this the first time the alarm fired?
+		// if there are multiple servers in an alarm, this was the first instance of the alarm being fired, so create the incident
+		"fFirst": true,
+
+		// are all of the servers in the alarm now under the threshold?
+		// if all of the servers are under the threshold, then close the incident
+		"fLast": false,
+
+		// Links back to premium for each server in the alarm
+		"alarmLinks": [
+			{
+				// is the server over the threshold?
+				"isSet": true,
+				// servers name
+				"serverName": "www-server-1",
+				// preformatted text pushed to chatrooms or in an email
+				"labelHTML": "Server <strong>www-server-1</strong>'s avg cpu utilization is <strong style=\"color:#090\">82.5%</strong>",
+				"labelText": "Server www-server-1's avg cpu utilization is 82.5%",
+				// link back to premium for that metric at that point in time
+				"link": "https://premium.boundary.com/home/5733/standard?ival=60&marker=1422377400000!CPU"
+			}
+		],
+
+		// list of servers in the group that are now back under the threshold
+		"clearServers": {},
+
+		// list of servers in the group that are now over the threshold
+		"setServers": {
+			"www-wak-1": {
+				"isSet": true,
+				"hostname": "www-wak-1",
+				"aggregate": "avg",
+				"metric": "CPU",
+				"value": 82.5,
+				"threshold": 80.0,
+				"time": 1422377400000,
+				"text": {
+					"isSet": true,
+					"serverName": "www-wak-1",
+					"labelHTML": "Server <strong>www-server-1</strong>'s avg cpu utilization is <strong style=\"color:#090\">82.5%</strong>",
+					"labelText": "Server www-server-1's avg cpu utilization is 82.5%",
+					"link": "https://premium.boundary.com/home/5733/standard?ival=60&marker=1422377400000!CPU"
+				}
+			}
+		},
+
+		// formatted title of the alarm used in email
+		"title": "avg cpu utilization is greater than the threshold of 80.0%",
+
+		// meta data on the metric
+		"metric": {
+			"id": "CPU",
+			"name": "CPU Utilization",
+			"type": "percent"
+		}
+	}
+};
+
+var mockAlarm3 = {
+	// fields from the alarm
+	"id": 56790,
+	"name": "CPU usage is high",
+
+	// metadata added for actions
+	"_meta": {
+		// was this the first time the alarm fired?
+		// if there are multiple servers in an alarm, this was the first instance of the alarm being fired, so create the incident
+		"fFirst": false,
+
+		// are all of the servers in the alarm now under the threshold?
+		// if all of the servers are under the threshold, then close the incident
+		"fLast": false,
+
+		// list of servers in the group that are now back under the threshold
+		"clearServers": {},
+
+		// list of servers in the group that are now over the threshold
+		"setServers": {
+			"www-wak-1": {
+				"isSet": true,
+				"hostname": "www-wak-1",
+				"aggregate": "avg",
+				"metric": "CPU",
+				"value": 91.3,
+				"threshold": 80.0,
+				"time": 1422379000000,
+				"text": {
+					"isSet": true,
+					"serverName": "www-wak-1",
+					"labelHTML": "Server <strong>www-server-1</strong>'s avg cpu utilization is <strong style=\"color:#090\">91.3%</strong>",
+					"labelText": "Server www-server-1's avg cpu utilization is 91.3%",
+					"link": "https://premium.boundary.com/home/5733/standard?ival=60&marker=1422379000000!CPU"
+				}
+			}
+		},
+
+		// meta data on the metric
+		"metric": {
+			"id": "CPU",
+			"name": "CPU Utilization",
+			"type": "percent"
+		}
+	}
+};
+
+var mockAlarm4 = {
+	// fields from the alarm
+	"id": 56791,
+	"name": "CPU usage is high",
+
+	// metadata added for actions
+	"_meta": {
+		// was this the first time the alarm fired?
+		// if there are multiple servers in an alarm, this was the first instance of the alarm being fired, so create the incident
+		"fFirst": false,
+
+		// are all of the servers in the alarm now under the threshold?
+		// if all of the servers are under the threshold, then close the incident
+		"fLast": true,
+
+		// Links back to premium for each server in the alarm
+		"alarmLinks": [
+			{
+				// is the server over the threshold?
+				"isSet": false,
+				// servers name
+				"serverName": "www-server-1",
+				// preformatted text pushed to chatrooms or in an email
+				"labelHTML": "Server <strong>www-server-1</strong>'s avg cpu utilization has returned to the acceptable <strong style=\"color:#090\">80.0%</strong>",
+				"labelText": "Server www-server-1's avg cpu utilization is 68.5%",
+				// link back to premium for that metric at that point in time
+				"link": "https://premium.boundary.com/home/5733/standard?ival=60&marker=1422388500000!CPU"
+			}
+		],
+
+		// list of servers in the group that are now back under the threshold
+		"clearServers": {
+			"www-wak-1": {
+				"isSet": false,
+				"hostname": "www-wak-1",
+				"aggregate": "avg",
+				"metric": "CPU",
+				"value": 68.5,
+				"threshold": 80.0,
+				"time": 1422388500000,
+				"text": {
+					"isSet": false,
+					"serverName": "www-wak-1",
+					"labelHTML": "Server <strong>www-server-1</strong>'s avg cpu utilization has returned to the acceptable <strong style=\"color:#090\">80.0%</strong>",
+					"labelText": "Server www-server-1's avg cpu utilization is 68.5%",
+					"link": "https://premium.boundary.com/home/5733/standard?ival=60&marker=1422388500000!CPU"
+				}
+			}
+		},
+
+		// list of servers in the group that are now over the threshold
+		"setServers": {},
+
+		// formatted title of the alarm used in email
+		"title": "avg cpu utilization has returned to the acceptable threshold of 80.0%",
+
+		// meta data on the metric
+		"metric": {
+			"id": "CPU",
+			"name": "CPU Utilization",
+			"type": "percent"
+		}
+	}
+};
+
 function getMockReferenceAlarm() {
 	return mockReferenceAlarm;
 }
@@ -175,7 +352,22 @@ function getMockAlarm() {
 	return mockAlarm;
 }
 
+function getMockAlarm2() {
+	return mockAlarm2;
+}
+
+function getMockAlarm3() {
+	return mockAlarm3;
+}
+
+function getMockAlarm4() {
+	return mockAlarm4;
+}
+
 module.exports = {
 	getReferenceAlarm: getMockReferenceAlarm,
-	getAlarm : getMockAlarm
+	getAlarm : getMockAlarm,
+	getAlarm2 : getMockAlarm2,
+	getAlarm3 : getMockAlarm3,
+	getAlarm4 : getMockAlarm4
 };
