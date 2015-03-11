@@ -9,24 +9,24 @@ var _async = require('async');
 var _format = require('util').format;
 var _request = require('request');
 
-function getOptions(REST_USER, REST_PWD, XMREBFORM_URL, messageId, messageName, messageType, priority, messageBody, targetGroupOrUser) {
+function getOptions(endpointURL, username, password, targetGroupOrUser, messageId, messageName, messageType, messageBody ) {
 
-    // If a targetGroupOrUser is available, use that, otherwise empty array. 
-    recipients = targetGroupOrUser ? [{ "targetName": targetGroupOrUser	}] : [];
-            
+	// If a targetGroupOrUser is available, use that, otherwise empty array.
+	var recipients = targetGroupOrUser ? [{ "targetName": targetGroupOrUser	}] : [];
+
 	return {
-		uri: _format(XMREBFORM_URL),
+		uri: endpointURL,
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': 'Basic ' + new Buffer( REST_USER + ':' + REST_PWD ).toString( "base64" )
+			'Authorization': 'Basic ' + new Buffer( username + ':' + password ).toString( "base64" )
 		},
 		json: {
 			"properties": {
-			  'entity_id':           messageId,
-			  'entity_display_name': messageName,
-			  'message_type':        messageType,
-			  'monitoring_tool':    'Boundary',
-			  'state_message':       messageBody
+				'entity_id':           messageId,
+				'entity_display_name': messageName,
+				'message_type':        messageType,
+				'monitoring_tool':    'Boundary',
+				'state_message':       messageBody
 			},
 			"recipients": recipients
 		}
@@ -46,7 +46,6 @@ function postmessage(action, alarm, alarmlog, cb) {
 	function handleRequest(err, resp, body, cb) {
 		if (err || resp.statusCode < 200 || resp.statusCode >= 300) {
 			stats.xmatters_errors++;
-			//console.log( "ERROR: " + err + '. RESP: ' + JSON.stringify( resp ) );
 		}
 		else {
 			stats.xmatters_messages++;
@@ -59,9 +58,14 @@ function postmessage(action, alarm, alarmlog, cb) {
 	if (!config) {
 		return cb('xMatters Action::No configuration found.');
 	}
-
-	if (!config.REST_USER) {
-		return cb('xMatters Action::No REST User found.');
+	if (!config.endpointURL) {
+		return cb('xMatters Action::No Endpoint URL found.');
+	}
+	if (!config.username) {
+		return cb('xMatters Action::No REST Username found.');
+	}
+	if (!config.password) {
+		return cb('xMatters Action::No REST Password found.');
 	}
 
 	var meta = alarm._meta;
@@ -79,10 +83,10 @@ function postmessage(action, alarm, alarmlog, cb) {
 	_.each(links, function(server) {
 		var messageId = _format('ALARM/%s/%s/%s', alarm.id, server.serverName, alarm.name);
 		var messageName = alarm.name;
-		var priority = server.isSet === false ? 'RECOVERY' : type;
+		var messageType = server.isSet === false ? 'RECOVERY' : type;
 		var messageBody = _format("%s\n\nview dashboard - %s%s", server.labelText, server.link, note);
 
-		var opts = getOptions(config.REST_USER, config.REST_PWD, config.XMREBFORM_URL, messageId, messageName, type, priority, messageBody, config.targetGroupOrUser);
+		var opts = getOptions(config.endpointURL, config.username, config.password, config.targetGroupOrUser, messageId, messageName, messageType, messageBody);
 
 		function alertFunction(innercb) {
 			_request.post(opts, function(err, resp, body) {
